@@ -3,11 +3,15 @@ import { useState, useEffect } from "react";
 import NewSignUpForm from "./components/NewSignUpForm";
 import NewLogInForm from "./components/NewLogInForm";
 import UserAccount from "./components/UserAccount";
+import HomePage from "./components/HomePage";
+import { login, useAuth, logout } from "./auth.js";
 import axios from "axios";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/NavBar";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -46,67 +50,93 @@ const userLogIn = (email, password) => {
     });
 };
 
+/** */
+
 function App() {
+  //let navigate = useNavigate();
+
   /** ----- STATE ----- */
   const [usersState, setUserState] = useState([]);
+  //const [currentUser, setCurrentUser] = useState({});
+  // const [logInSucceed, setLogInSucceed] = useState(false);
+
   const signUp = (userName, email, password, confirmPassword) => {
     userSignUp(userName, email, password, confirmPassword)
-      .then((newUser) => {
-        setUserState((usersState) => [...usersState, newUser]);
+      .then((response) => {
+        if (response["message"] === "success") {
+          setUserState((usersState) => [...usersState, response["user"]]);
+          alert("You successfully created an account.");
+        } else {
+          alert(response["message"]);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const users = usersState.map((userAccount) => {
-    return (
-      <UserAccount
-        userAccount={userAccount}
-        //createNote={createNote}
-        //selectNote={selectNote}
-      />
-    );
-  });
-  let userLoggedIn = "";
+  // const users = usersState.map((userAccount) => {
+  //   return (
+  //     <UserAccount
+  //       userAccount={userAccount}
+  //       //createNote={createNote}
+  //       //selectNote={selectNote}
+  //     />
+  //   );
+  // });
+
+  // let userLoggedIn = {};
+
+  // let userAccountId = "";
+
+  // const setCurrentUserState = (currentUser) => {
+  //   setCurrentUser(currentUser);
+  // };
 
   const logIn = (email, password) => {
     userLogIn(email, password)
       .then((userAccount) => {
-        userLoggedIn = userAccount;
+        //userLoggedIn = userAccount;
+        // if (userAccount) {
 
-        console.log("Logged in successfully.");
-        console.log(userLoggedIn);
-        console.log(userLoggedIn.user_id);
+        // }
+        login(userAccount.access_token);
+        window.location.href = `/users/${userAccount.user_id}`;
+
+        // setCurrentUserState(userAccount);
+
+        // userAccountId = userAccount.user_id;
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  useEffect(() => {
-    axios
-      .get(`${kBaseUrl}/users/${userLoggedIn.user_id}`)
-      .then((response) => {});
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${kBaseUrl}/users/${userLoggedIn.user_id}`)
+  //     .then((response) => {});
+  // }, []);
 
   return (
-    <section className="App">
-      <header className="App-header"></header>
-      <NavBar />
-      <main>
-        <nav>
-          <section>
-            Sign Up
-            <NewSignUpForm signUp={signUp} />
-          </section>
-          <section>
-            Log In
-            <NewLogInForm logIn={logIn} />
-          </section>
-        </nav>
-      </main>
-    </section>
+    <>
+      <Router>
+        <section className="App">
+          <header className="App-header"></header>
+
+          {/* {currentUser && <Link to={`/users/${currentUser.user_id}`} />} */}
+
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<NewSignUpForm signUp={signUp} />} />
+            <Route path="/login" element={<NewLogInForm logIn={logIn} />} />
+            <Route path="/users/:userId" element={<UserAccount />} />
+          </Routes>
+          <main></main>
+        </section>
+      </Router>
+    </>
   );
 }
 

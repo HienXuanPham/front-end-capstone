@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const NewSignUpForm = ({ signUp }) => {
   const [userName, setUserName] = useState("");
@@ -30,23 +32,57 @@ const NewSignUpForm = ({ signUp }) => {
   };
 
   return (
-    <form onSubmit={formSubmit}>
-      <section>
-        <label>Name</label>
-        <input type="text" value={userName} onChange={handleUserName} />
-        <label>Email</label>
-        <input type="text" value={email} onChange={handleEmail} />
-        <label>Password</label>
-        <input type="text" value={password} onChange={handlePassword} />
-        <label>Confirm Password</label>
-        <input
-          type="text"
-          value={confirmPassword}
-          onChange={handleConfirmPassword}
-        />
-      </section>
-      <input type="submit" value="Sign Up" />
-    </form>
+    <div className="container">
+      <h2>Sign Up Page</h2>
+      <Form>
+        <Form.Group>
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="First Name and Last Name"
+            value={userName}
+            onChange={handleUserName}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={handleEmail}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={handlePassword}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Confirm Password"
+            value={confirmPassword}
+            onChange={handleConfirmPassword}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Button as="sub" variant="primary" onClick={formSubmit}>
+            Sign Up
+          </Button>
+        </Form.Group>
+        <Form.Group>
+          <small>
+            Already have an account? <Link to="/login">Log In</Link>
+          </small>
+        </Form.Group>
+      </Form>
+    </div>
   );
 };
 

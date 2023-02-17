@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const NewLogInForm = ({ logIn }) => {
   const [email, setEmail] = useState("");
@@ -20,15 +22,39 @@ const NewLogInForm = ({ logIn }) => {
   };
 
   return (
-    <form onSubmit={formSubmit}>
-      <section>
-        <label>Email</label>
-        <input type="text" value={email} onChange={handleEmail} />
-        <label>Password</label>
-        <input type="text" value={password} onChange={handlePassword} />
-      </section>
-      <input type="submit" value="Log In" />
-    </form>
+    <div className="container">
+      <h2>Log In Page</h2>
+      <Form>
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Your Email"
+            value={email}
+            onChange={handleEmail}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Your Password"
+            value={password}
+            onChange={handlePassword}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Button as="sub" variant="primary" onClick={formSubmit}>
+            Log In
+          </Button>
+        </Form.Group>
+        <Form.Group>
+          <small>
+            Do you have an account? <Link to="/signup">Sign Up</Link>
+          </small>
+        </Form.Group>
+      </Form>
+    </div>
   );
 };
 
