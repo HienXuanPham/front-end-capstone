@@ -21,7 +21,7 @@ const NewNoteForm = ({ addNewNote }) => {
 
   return (
     <section>
-      <h2>Create a Note</h2>
+      <h2>Create Your Journal</h2>
       <form onSubmit={formSubmit}>
         <label>Title</label>
         <br />
@@ -31,7 +31,7 @@ const NewNoteForm = ({ addNewNote }) => {
         <br />
         <textarea value={journal} onChange={handleJournal} />
         <br />
-        <input type="submit" value="Add New Note" />
+        <input type="submit" value="Save" />
       </form>
     </section>
   );

@@ -3,20 +3,16 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import NewNoteForm from "./NewNoteForm";
 import Note from "./Note.js";
-// import { BrowserRouter as Route, useSearchParams } from "react-router-dom";
-// import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
 const UserAccount = () => {
-  let paramsId = "";
   const UserId = () => {
     let params = useParams();
-    console.log(params.userId);
-    paramsId = params.userId;
+    return params.userId;
   };
-  UserId();
+  let paramsId = UserId();
 
   const [notesState, setNotesState] = useState([]);
 
@@ -58,7 +54,7 @@ const UserAccount = () => {
   };
 
   const notes = notesState.map((note) => {
-    return <Note note={note} deleteNote={deleteNote} />;
+    return <Note key={note.note_id} note={note} deleteNote={deleteNote} />;
   });
 
   return (

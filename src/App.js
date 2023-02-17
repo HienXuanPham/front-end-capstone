@@ -1,17 +1,14 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NewSignUpForm from "./components/NewSignUpForm";
 import NewLogInForm from "./components/NewLogInForm";
 import UserAccount from "./components/UserAccount";
 import HomePage from "./components/HomePage";
-import { login, useAuth, logout } from "./auth.js";
+import { login } from "./auth.js";
 import axios from "axios";
-import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -50,16 +47,10 @@ const userLogIn = (email, password) => {
     });
 };
 
-/** */
-
 function App() {
-  //let navigate = useNavigate();
-
   /** ----- STATE ----- */
   const [usersState, setUserState] = useState([]);
-  //const [currentUser, setCurrentUser] = useState({});
-  // const [logInSucceed, setLogInSucceed] = useState(false);
-
+  /** ----- SIGN UP ----- */
   const signUp = (userName, email, password, confirmPassword) => {
     userSignUp(userName, email, password, confirmPassword)
       .then((response) => {
@@ -74,58 +65,27 @@ function App() {
         console.log(error);
       });
   };
-
-  // const users = usersState.map((userAccount) => {
-  //   return (
-  //     <UserAccount
-  //       userAccount={userAccount}
-  //       //createNote={createNote}
-  //       //selectNote={selectNote}
-  //     />
-  //   );
-  // });
-
-  // let userLoggedIn = {};
-
-  // let userAccountId = "";
-
-  // const setCurrentUserState = (currentUser) => {
-  //   setCurrentUser(currentUser);
-  // };
-
+  /** ----- LOG IN ----- */
   const logIn = (email, password) => {
     userLogIn(email, password)
       .then((userAccount) => {
-        //userLoggedIn = userAccount;
-        // if (userAccount) {
-
-        // }
-        login(userAccount.access_token);
-        window.location.href = `/users/${userAccount.user_id}`;
-
-        // setCurrentUserState(userAccount);
-
-        // userAccountId = userAccount.user_id;
+        if (userAccount.message === "success") {
+          login(userAccount.data.access_token);
+          window.location.href = `/users/${userAccount.data.user_id}`;
+        } else {
+          alert(userAccount.message);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${kBaseUrl}/users/${userLoggedIn.user_id}`)
-  //     .then((response) => {});
-  // }, []);
-
   return (
     <>
       <Router>
         <section className="App">
           <header className="App-header"></header>
-
-          {/* {currentUser && <Link to={`/users/${currentUser.user_id}`} />} */}
-
           <NavBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
