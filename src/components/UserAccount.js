@@ -90,12 +90,12 @@ const UserAccount = () => {
         quote.author = "Unknow";
       }
       handleQuote(`${quote.text} - ${quote.author}`);
-      //return `${quote.text} - ${quote.author}`;
       return;
     };
     loadQuote();
   }, []);
 
+  /** ------------------------------------------------------- */
   return (
     <div>
       <h2>Hi {paramsId}! This is your page</h2>
