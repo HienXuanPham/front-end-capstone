@@ -29,7 +29,9 @@ const NewNoteForm = ({ addNewNote }) => {
         <br />
         <label>Journal</label>
         <br />
-        <textarea value={journal} onChange={handleJournal} />
+        <textarea value={journal} onChange={handleJournal}>
+          Save
+        </textarea>
         <br />
         <input type="submit" value="Save" />
       </form>

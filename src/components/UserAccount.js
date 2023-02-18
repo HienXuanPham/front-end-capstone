@@ -57,11 +57,51 @@ const UserAccount = () => {
     return <Note key={note.note_id} note={note} deleteNote={deleteNote} />;
   });
 
+  /** ----- External API ----- */
+  const [quote, setQuote] = useState("");
+
+  const handleQuote = (quote) => {
+    setQuote(quote);
+  };
+
+  const getRandomQuote = (quotes) => {
+    const index = Math.floor(Math.random() * quotes.length);
+    return quotes[index];
+  };
+
+  const getQuote = () => {
+    return axios
+      .get("https://type.fit/api/quotes")
+      .then((response) => {
+        return response.data;
+      })
+      .then((quotes) => {
+        return getRandomQuote(quotes);
+      })
+      .catch(() => {
+        console.log("error");
+      });
+  };
+
+  useEffect(() => {
+    const loadQuote = async () => {
+      const quote = await getQuote();
+      if (quote.author === null) {
+        quote.author = "Unknow";
+      }
+      handleQuote(`${quote.text} - ${quote.author}`);
+      //return `${quote.text} - ${quote.author}`;
+      return;
+    };
+    loadQuote();
+  }, []);
+
   return (
     <div>
       <h2>Hi {paramsId}! This is your page</h2>
+      <p>{quote}</p>
       <section>
-        <h2>Your notes </h2>
+        <h2>Your notes</h2>
         {notes}
       </section>
       <section>
