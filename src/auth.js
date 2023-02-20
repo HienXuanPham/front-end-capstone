@@ -1,10 +1,35 @@
-import { createAuthProvider } from "react-token-auth";
+import axios from "axios";
 
-export const { useAuth, authFetch, login, logout } = createAuthProvider({
-  accessTokenKey: "access_token",
-  onUpdateToken: (token) =>
-    fetch("/refresh", {
-      method: "POST",
-      body: token.refresh_token,
-    }).then((r) => r.json()),
-});
+const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
+
+/* --------- API CALLS --------- */
+
+/** ----- STATE ----- */
+//const [usersState, setUserState] = useState([]);
+//const [currentUser, setCurrentUser] = useState(undefined);
+
+// const setCurrentUserState = (userId) => {
+//   setCurrentUser(userId);
+// };
+
+/** ----- SIGN UP ----- */
+
+/** LOG OUT */
+const logOut = () => {
+  return JSON.parse(localStorage.removeItem("userLoggedIn"));
+};
+
+/** Get current user */
+const getCurrentUser = () => {
+  return JSON.parse(localStorage.getItem("userLoggedIn"));
+};
+
+/** export authentication provider */
+// const AuthProvider = {
+//   signUp,
+//   logIn,
+//   logOut,
+//   getCurrentUser,
+// };
+
+//export default AuthProvider;

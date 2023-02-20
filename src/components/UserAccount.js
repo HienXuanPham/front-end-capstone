@@ -1,112 +1,36 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import NewNoteForm from "./NewNoteForm";
-import Note from "./Note.js";
-import { useParams } from "react-router-dom";
-
-const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
+import httpClient from "../httpClient";
+import Quote from "./Quote";
+import NoteList from "./NoteList";
 
 const UserAccount = () => {
-  const UserId = () => {
-    let params = useParams();
-    return params.userId;
-  };
-  let paramsId = UserId();
-
-  const [notesState, setNotesState] = useState([]);
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
-    axios
-      .get(`${kBaseUrl}/users/${paramsId}/notes`)
-      .then((response) => {
-        setNotesState(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
-
-  const addNewNote = (title, journal) => {
-    const requestBody = {
-      title: title,
-      journal: journal,
-    };
-    return axios
-      .post(`${kBaseUrl}/users/${paramsId}/notes`, requestBody)
-      .then((response) => {
-        setNotesState((notesState) => [...notesState, response.data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
-  const deleteNote = (id) => {
-    axios
-      .delete(`${kBaseUrl}/users/${paramsId}/notes/${id}`)
-      .then((response) => {
-        const updatedNoteData = notesState.filter(
-          (note) => note.note_id !== id
-        );
-        setNotesState(updatedNoteData);
-      });
-  };
-
-  const notes = notesState.map((note) => {
-    return <Note key={note.note_id} note={note} deleteNote={deleteNote} />;
-  });
-
-  /** ----- External API ----- */
-  const [quote, setQuote] = useState("");
-
-  const handleQuote = (quote) => {
-    setQuote(quote);
-  };
-
-  const getRandomQuote = (quotes) => {
-    const index = Math.floor(Math.random() * quotes.length);
-    return quotes[index];
-  };
-
-  const getQuote = () => {
-    return axios
-      .get("https://type.fit/api/quotes")
-      .then((response) => {
-        return response.data;
-      })
-      .then((quotes) => {
-        return getRandomQuote(quotes);
-      })
-      .catch(() => {
-        console.log("error");
-      });
-  };
-
-  useEffect(() => {
-    const loadQuote = async () => {
-      const quote = await getQuote();
-      if (quote.author === null) {
-        quote.author = "Unknow";
+    (async () => {
+      try {
+        const response = await httpClient.get("http://localhost:5000/@me");
+        setCurrentUser(response.data);
+        localStorage.setItem("status", "loggedIn");
+        console.log(localStorage.getItem("status"));
+      } catch (error) {
+        console.log("Not Authenticated.");
       }
-      handleQuote(`${quote.text} - ${quote.author}`);
-      return;
-    };
-    loadQuote();
+    })();
   }, []);
 
-  /** ------------------------------------------------------- */
+  let userId = "";
+  if (currentUser) {
+    console.log(`Current User: ${currentUser.user_id}`);
+    userId = currentUser.user_id;
+  }
+
   return (
     <div>
-      <h2>Hi {paramsId}! This is your page</h2>
-      <p>{quote}</p>
-      <section>
-        <h2>Your notes</h2>
-        {notes}
-      </section>
-      <section>
-        <NewNoteForm addNewNote={addNewNote} />
-      </section>
+      {currentUser && <h1>Hi {currentUser.name}</h1>}
+      {currentUser && <Quote />}
+      {currentUser && <NoteList userId={userId} />}
     </div>
   );
 };
