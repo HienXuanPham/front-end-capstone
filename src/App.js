@@ -1,13 +1,13 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 import NewSignUpForm from "./components/NewSignUpForm";
 import NewLogInForm from "./components/NewLogInForm";
 import UserAccount from "./components/UserAccount";
 import HomePage from "./components/HomePage";
-import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import httpClient from "./httpClient";
-import { useState } from "react";
+import { UserContextProvider } from "./UserContext";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -46,8 +46,6 @@ const userLogIn = (email, password) => {
 };
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({});
-
   const signUp = (userName, email, password, confirmPassword) => {
     userSignUp(userName, email, password, confirmPassword)
       .then((response) => {
@@ -67,7 +65,6 @@ function App() {
     userLogIn(email, password)
       .then((userAccount) => {
         if (userAccount.message === "success") {
-          setCurrentUser(userAccount);
           window.location.href = "/user";
         } else {
           alert(userAccount.message);
@@ -80,15 +77,17 @@ function App() {
 
   return (
     <>
-      <Router>
-        <NavBar />
-        <Routes>
-          <Route path="/user" element={<UserAccount />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<NewSignUpForm signUp={signUp} />} />
-          <Route path="/login" element={<NewLogInForm logIn={logIn} />} />
-        </Routes>
-      </Router>
+      <UserContextProvider>
+        <Router>
+          <NavBar />
+          <Routes>
+            <Route path="/user" element={<UserAccount />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/signup" element={<NewSignUpForm signUp={signUp} />} />
+            <Route path="/login" element={<NewLogInForm logIn={logIn} />} />
+          </Routes>
+        </Router>
+      </UserContextProvider>
     </>
   );
 }

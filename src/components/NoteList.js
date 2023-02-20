@@ -1,12 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import NewNoteForm from "./NewNoteForm";
 import Note from "./Note.js";
 import httpClient from "../httpClient";
+import { UserContext } from "../UserContext";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
-const NoteList = ({ userId }) => {
+const NoteList = () => {
   const [notesState, setNotesState] = useState([]);
+  const { currentUserId } = useContext(UserContext);
+  const userId = currentUserId;
 
   useEffect(() => {
     httpClient

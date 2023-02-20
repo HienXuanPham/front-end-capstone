@@ -2,17 +2,22 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import axios from "../httpClient.js";
+import { UserContext } from "../UserContext.js";
+import { useContext } from "react";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
 function NavBar() {
-  const loggedIn = localStorage.getItem("status");
+  const { currentUserId, setCurrentUserId } = useContext(UserContext);
+
+  const loggedIn = currentUserId;
   console.log(loggedIn);
 
   const userLogOut = () => {
     axios.post(`${kBaseUrl}/logout`);
 
-    localStorage.removeItem("status");
+    localStorage.removeItem("userId");
+    setCurrentUserId(null);
   };
 
   return (
