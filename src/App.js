@@ -1,5 +1,5 @@
-import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "./styles/App.css";
+import "bootswatch/dist/litera/bootstrap.min.css";
 import NewSignUpForm from "./components/NewSignUpForm";
 import NewLogInForm from "./components/NewLogInForm";
 import UserAccount from "./components/UserAccount";
@@ -81,13 +81,16 @@ function App() {
         <Router>
           <NavBar />
           <Routes>
-            <Route path="/user" element={<UserAccount />} />
             <Route path="/" element={<HomePage />} />
+            <Route path="/user" element={<UserAccount />} />
             <Route path="/signup" element={<NewSignUpForm signUp={signUp} />} />
             <Route path="/login" element={<NewLogInForm logIn={logIn} />} />
           </Routes>
         </Router>
       </UserContextProvider>
+      <footer id="footer-homepage" className="fixed-bottom text-center">
+        © 2023 Created by Xuan Hien Pham
+      </footer>
     </>
   );
 }

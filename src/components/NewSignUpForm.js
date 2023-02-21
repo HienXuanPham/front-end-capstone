@@ -33,7 +33,7 @@ const NewSignUpForm = ({ signUp }) => {
 
   return (
     <div className="container">
-      <h2>Sign Up Page</h2>
+      <h3>Sign Up</h3>
       <Form>
         <Form.Group>
           <Form.Label>Name</Form.Label>

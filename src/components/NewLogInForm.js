@@ -23,7 +23,7 @@ const NewLogInForm = ({ logIn }) => {
 
   return (
     <div className="container">
-      <h2>Log In Page</h2>
+      <h3>Login</h3>
       <Form>
         <Form.Group>
           <Form.Label>Email</Form.Label>

@@ -15,6 +15,7 @@ const UserAccount = () => {
         const response = await httpClient.get("http://localhost:5000/@me");
         setCurrentUser(response.data);
         localStorage.setItem("userId", response.data.user_id);
+        localStorage.setItem("userName", response.data.name);
         setCurrentUserId(response.data.user_id);
       } catch (error) {
         console.log("Not Authenticated.");
@@ -23,11 +24,10 @@ const UserAccount = () => {
   }, []);
 
   return (
-    <div>
-      {currentUser && <h1>Hi {currentUser.name}</h1>}
+    <>
       {currentUser && <Quote />}
       {currentUser && <NoteList />}
-    </div>
+    </>
   );
 };
 

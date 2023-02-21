@@ -1,14 +1,17 @@
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
 import axios from "../httpClient.js";
 import { UserContext } from "../UserContext.js";
 import { useContext } from "react";
+import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
 function NavBar() {
-  const { currentUserId, setCurrentUserId } = useContext(UserContext);
+  const {
+    currentUserId,
+    currentUserName,
+    setCurrentUserId,
+    setCurrentUserName,
+  } = useContext(UserContext);
 
   const loggedIn = currentUserId;
   console.log(loggedIn);
@@ -17,27 +20,39 @@ function NavBar() {
     axios.post(`${kBaseUrl}/logout`);
 
     localStorage.removeItem("userId");
+    localStorage.removeItem("userName");
     setCurrentUserId(null);
+    setCurrentUserName(null);
   };
 
   return (
     <>
-      <Navbar bg="dark" variant="dark">
+      <Navbar className="navbar navbar-expand-lg navbar-light bg-light">
         <Container>
           <Navbar.Brand href="/">Journal</Navbar.Brand>
-          <Nav className="me-auto">
+          <Nav>
             {loggedIn === null ? (
-              <>
-                <>
-                  <Nav.Link href="/">Home</Nav.Link>
-                  <Nav.Link href="/login">Log In</Nav.Link>
-                  <Nav.Link href="/signup">Sign Up</Nav.Link>
-                </>
-              </>
+              <Nav>
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/login">Log In</Nav.Link>
+                <Nav.Link href="/signup">Sign Up</Nav.Link>
+              </Nav>
             ) : (
-              <Nav.Link href="/login" onClick={userLogOut}>
-                Log Out
-              </Nav.Link>
+              <>
+                <Dropdown>
+                  <Dropdown.Toggle
+                    id="dropdown-button-dark-example1"
+                    variant="secondary"
+                  >
+                    Hi, {currentUserName}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu variant="light-dark sm">
+                    <Dropdown.Item href="/login" onClick={userLogOut}>
+                      Log Out
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </>
             )}
           </Nav>
         </Container>

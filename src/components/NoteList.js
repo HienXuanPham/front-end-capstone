@@ -3,6 +3,7 @@ import NewNoteForm from "./NewNoteForm";
 import Note from "./Note.js";
 import httpClient from "../httpClient";
 import { UserContext } from "../UserContext";
+import "../styles/NoteList.css";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -88,12 +89,10 @@ const NoteList = () => {
   return (
     <>
       <section>
-        <h2>Your notes</h2>
-        {notes}
-      </section>
-      <section>
         <NewNoteForm addNewNote={addNewNote} />
       </section>
+      <br />
+      <section className="cards-list">{notes}</section>
     </>
   );
 };

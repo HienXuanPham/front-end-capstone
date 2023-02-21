@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 const Quote = () => {
   /** ----- External API ----- */
-  const [quote, setQuote] = useState("");
+  const [quote, setQuote] = useState({});
 
   const handleQuote = (quote) => {
     setQuote(quote);
@@ -34,13 +34,20 @@ const Quote = () => {
       if (quote.author === null) {
         quote.author = "Unknow";
       }
-      handleQuote(`${quote.text} - ${quote.author}`);
+      handleQuote({ quote: quote.text, author: quote.author });
       return;
     };
     loadQuote();
   }, []);
 
-  return <p>{quote}</p>;
+  return (
+    <figure className="text-center" style={{ padding: "1rem" }}>
+      <blockquote className="blockquote">
+        <p className="mb-O">{quote.quote}</p>
+      </blockquote>
+      <figcaption className="blockquote-footer">{quote.author}</figcaption>
+    </figure>
+  );
 };
 
 export default Quote;

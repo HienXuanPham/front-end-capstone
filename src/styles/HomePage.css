@@ -1,0 +1,19 @@
+#home-page {
+    height: 100vh;
+    background-image: url("./image/sixteen-miles-out-6Ahp8-YMoww-unsplash.jpeg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+}
+
+.h3-home-page {
+    color: antiquewhite;
+}
+
+.home-page-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+}
