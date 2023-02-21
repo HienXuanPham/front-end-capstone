@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import httpClient from "../httpClient";
 import Quote from "./Quote";
 import NoteList from "./NoteList";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 
 const UserAccount = () => {
   const [currentUser, setCurrentUser] = useState();

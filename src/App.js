@@ -7,7 +7,7 @@ import HomePage from "./components/HomePage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import httpClient from "./httpClient";
-import { UserContextProvider } from "./UserContext";
+import { UserContextProvider } from "./context/UserContext";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -88,7 +88,7 @@ function App() {
           </Routes>
         </Router>
       </UserContextProvider>
-      <footer id="footer-homepage" className="fixed-bottom text-center">
+      <footer id="footer-homepage" className="fixed-bottom">
         © 2023 Created by Xuan Hien Pham
       </footer>
     </>

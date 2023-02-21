@@ -1,6 +1,9 @@
-/* .App {
+.App {
   text-align: left;
-} */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 section {
   display: flex;

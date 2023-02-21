@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import NewNoteForm from "./NewNoteForm";
 import Note from "./Note.js";
 import httpClient from "../httpClient";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../context/UserContext";
 import "../styles/NoteList.css";
 
 const kBaseUrl = process.env.REACT_APP_BACKEND_URL;

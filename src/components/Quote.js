@@ -41,12 +41,14 @@ const Quote = () => {
   }, []);
 
   return (
-    <figure className="text-center" style={{ padding: "1rem" }}>
-      <blockquote className="blockquote">
-        <p className="mb-O">{quote.quote}</p>
-      </blockquote>
-      <figcaption className="blockquote-footer">{quote.author}</figcaption>
-    </figure>
+    <article>
+      <figure className="text-center" style={{ padding: "1rem" }}>
+        <blockquote className="blockquote">
+          <p className="mb-O">{quote.quote}</p>
+        </blockquote>
+        <figcaption className="blockquote-footer">{quote.author}</figcaption>
+      </figure>
+    </article>
   );
 };
 

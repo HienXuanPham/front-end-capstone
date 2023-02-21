@@ -1,5 +1,5 @@
 import axios from "../httpClient.js";
-import { UserContext } from "../UserContext.js";
+import { UserContext } from "../context/UserContext.js";
 import { useContext } from "react";
 import { Container, Nav, Navbar, Dropdown } from "react-bootstrap";
 
