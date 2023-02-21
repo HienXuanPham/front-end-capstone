@@ -48,8 +48,41 @@ const NoteList = () => {
       });
   };
 
+  const updateNote = async (noteId, title, journal) => {
+    const requestBody = {
+      title: title,
+      journal: journal,
+    };
+    return await httpClient
+      .put(`${kBaseUrl}/users/${userId}/notes/${noteId}`, requestBody)
+      .then((response) => {
+        let notesUpdated = notesState.map((note) => {
+          if (note.note_id === response.note_id) {
+            return {
+              ...note,
+              title: response.title,
+              journal: response.journal,
+            };
+          }
+          return note;
+        });
+        setNotesState(notesUpdated);
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const notes = notesState.map((note) => {
-    return <Note key={note.note_id} note={note} deleteNote={deleteNote} />;
+    return (
+      <Note
+        key={note.note_id}
+        note={note}
+        deleteNote={deleteNote}
+        updateNote={updateNote}
+      />
+    );
   });
 
   return (
