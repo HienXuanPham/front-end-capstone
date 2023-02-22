@@ -12,9 +12,7 @@ const UserAccount = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await httpClient.get(
-          "https://journal-back-end.herokuapp.com/@me"
-        );
+        const response = await httpClient.get("http://localhost:5000/@me");
         setCurrentUser(response.data);
         localStorage.setItem("userId", response.data.user_id);
         localStorage.setItem("userName", response.data.name);
