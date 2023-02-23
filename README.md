@@ -17,5 +17,3 @@ This front end was made as a capstone project for Ada Developers Academy. Journa
 - Run `yarn install`
 - Run `yarn start`
 
-# Deployment
-- Heroku: https://journal-front-end.herokuapp.com/
