@@ -1,6 +1,6 @@
 # Journal
 
-This front end was made as a capstone project for Ada Developers Academy. Journal is a website that a user write their diary.
+Journal is a website that a user write their diary. Using React - JavaScript library for building user interfaces.
 
 # Demo
 https://drive.google.com/file/d/1WQNTOP8gn1pGcEZVGKI6xfgbRg7S1dMA/view?resourcekey
