@@ -3,7 +3,10 @@
 Journal is a website that a user write their diary. Using React - JavaScript library for building user interfaces.
 
 # Demo
-https://drive.google.com/file/d/1WQNTOP8gn1pGcEZVGKI6xfgbRg7S1dMA/view?resourcekey
+
+https://github.com/HienXuanPham/journal-front-end/assets/44250274/8c97225d-4dff-4685-bf64-216d3d2b0554
+
+VGKI6xfgbRg7S1dMA/view?resourcekey
 
 # Dependencies
 - Front-end: React
